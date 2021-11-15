@@ -12,12 +12,12 @@ def company_to_json(item):
     Processing the result of sql query
     """
     return {
-        "category_name": item[0],
-        "subcategory_name": item[1],
-        "company_name": item[2],
-        "email_address": item[3],
-        "web_address": item[4],
-        "phone_number": item[5]
+        "category_name": item[1],
+        "subcategory_name": item[2],
+        "company_name": item[3],
+        "email_address": item[4],
+        "web_address": item[5],
+        "phone_number": item[6]
     }
 
 
@@ -67,7 +67,7 @@ def message_query_done():
 
 def save_data_to_database(dict_: dict) -> None or str:
     """
-    Query to select data to database form scraping
+    Query to select data to database form scraping.
     """
     try:
         with SQLite("application.db") as cur:
@@ -79,4 +79,23 @@ def save_data_to_database(dict_: dict) -> None or str:
             return message_query_done()
     except Exception as exception_name:
         print(exception_name)
+        return []
+
+
+def get_count_of_random_companies(num: int):
+    """
+    Query to get random item from database.
+    """
+    try:
+        with SQLite("application.db") as cur:
+            # Execute the query
+            cur.execute('select * from companies order by RANDOM() LIMIT (?)', (num,))
+
+            # Fetch the data and turn into a dict
+            result = list(map(company_to_json, cur.fetchall()))
+
+            return result
+
+    except Exception as exception_name:
+        print(f'Return count of random companies: {exception_name}')
         return []
