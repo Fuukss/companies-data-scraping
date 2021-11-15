@@ -86,10 +86,9 @@ def main():
                              "1 - display categories\n"
                              "2 - display subcategories\n"
                              "3 - scrap the random category\n"
-                             "4 - select first rows of companies table\n"
-                             "5 - select random count of records\n"
-                             "6 - send emails to potential clients\n"
-                             "7 - exit\n"))
+                             "4 - select random count of records\n"
+                             "5 - send emails to potential clients\n"
+                             "6 - exit\n"))
         if option == "1":
             for i in category_list_of_objects:
                 print(i)
@@ -99,12 +98,10 @@ def main():
         if option == '3':
             scrap_data_with_random_count()
         if option == '4':
-            take_one_company()
-        if option == '5':
             get_random_records()
-        if option == '6':
+        if option == '5':
             send_random_count_of_emails()
-        if option == "7":
+        if option == "6":
             break
 
 
