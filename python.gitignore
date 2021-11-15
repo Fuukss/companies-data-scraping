@@ -136,3 +136,12 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Pushed base verioin without password
+email_sender.py
+
+# Bin for trash code
+_.py
+
+# Localy created database
+application.db
