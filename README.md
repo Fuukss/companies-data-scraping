@@ -1,6 +1,6 @@
 # Companies data scraper 
 
-## Setup 
+## Create database 
 ```
 $ python create_db.py
 ```
@@ -11,9 +11,12 @@ $ python main.py
 
 ## Usage 
 #### At this moment program available:
-- Display categories 
-- Display subcategories
-- Select and display one record from database
-- Scrap the data and save to database
-#### This two options 
+1 - display categories\
+2 - display subcategories\
+3 - scrap random count categories\
+4 - display random count of records from database\
+5 - send random count of emails to potential clients\
+6 - exit
 
+
+                             
