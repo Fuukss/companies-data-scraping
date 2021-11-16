@@ -1,5 +1,5 @@
 # Companies data scraper 
-One application for scraping data and sending emails.
+One application for scraping data from <https://panoramafirm.pl/> and sending emails use defined email template.
 
 
 ## Create database 
@@ -7,13 +7,17 @@ One application for scraping data and sending emails.
 $ python create_db.py
 ```
 
-## Update smtp login and email params
-```
-# File email_sender.py
-smtp.login('<email_login>', '<password>')
+## Update smtp settings and email params
+Possible to send emails from GMail SMTP Server (Google) \
+Instruction for gmail config: \
+https://www.siteground.com/kb/gmail-smtp-server/?gclid=Cj0KCQiAys2MBhDOARIsAFf1D1ecZSfRvG6ffbI5lChZ4F7t56jLweOioxqSCXVd3N563Sy3tFIfDo8aAtr5EALw_wcB
 
-msg['Subject'] = '<Subject>'
-msg['From'] = '<email>'
+## Required changes in email_sender.py file
+```
+subject: str = '<subject of email>'
+send_from: str = '<email>'
+
+smtp.login('<email_login>', '<password>')
 ```
 
 ## Update email template 
