@@ -6,7 +6,7 @@ from category import get_list_of_categories, \
     get_list_of_subcategories, \
     get_random_count_of_subcategories_objects, \
     category_list_of_objects, subcategory_list_of_objects
-from db import take_one_company, get_count_of_random_companies
+from db import get_count_of_random_companies_to_send, get_count_of_random_companies
 from scraping import DownloadData
 from email_sender import send_email
 
@@ -35,7 +35,7 @@ def scrap_data_with_random_count() -> str:
             companies = DownloadData(single_random_data)
             companies.scrap_company_data()
     except IndexError:
-        print('Probably categories or subcategories doesn"t exist.')
+        print("Probably categories or subcategories doesn't exist.")
     except Exception as exception_name:
         print(exception_name)
 
@@ -61,7 +61,9 @@ def send_random_count_of_emails() -> None:
     """
     try:
         item_count = int(input(print("How many emails do you wanna send?\n")))
-        company_random_data = get_count_of_random_companies(item_count)
+        company_random_data = get_count_of_random_companies_to_send(item_count)
+        if not company_random_data:
+            return print("There are no records left in the database to be sent. Try scrap new.")
         len_ = len(company_random_data)
         for index, single_random_data in enumerate(company_random_data, start=1):
             print(f"Email: {index}/{len_}: {single_random_data}")
@@ -86,7 +88,7 @@ def main():
                              "1 - display categories\n"
                              "2 - display subcategories\n"
                              "3 - scrap the random category\n"
-                             "4 - select random count of records\n"
+                             "4 - display random count of records\n"
                              "5 - send emails to potential clients\n"
                              "6 - exit\n"))
         if option == "1":
