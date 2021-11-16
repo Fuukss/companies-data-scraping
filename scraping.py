@@ -19,7 +19,7 @@ class PanoramaSiteData:
     Data needed to future URL's creation.
     """
     PANORAMA_MAIN: str = 'https://panoramafirm.pl'
-    TEST_LIST: str = ('/amortyzatory_samochodowe')
+    TEST_LIST: str = '/amortyzatory_samochodowe'
     END_PANORAMA_MAIN: str = '/firmy,1.html'
     END_PANORAMA_MAIN_ST: str = '/firmy,'
     END_PANORAMA_MAIN_SEC: str = '.html'
@@ -52,7 +52,7 @@ class DownloadData(PanoramaSiteData):
         number_of_pages = math.ceil(.5 * number_of_pages)
         return number_of_pages
 
-    def info_about_process(self, page, pages):
+    def info_about_process(self, page: int, pages: int):
         print(
             f'Working {page}/{pages} page. '
             f'Category: {self.category[1]}. Subcategory: {self.category[2]}')
@@ -67,7 +67,7 @@ class DownloadData(PanoramaSiteData):
         bs_category = BeautifulSoup(page_category.content, 'html.parser')
         return bs_category
 
-    def scrap_company_data(self):
+    def scrap_company_data(self) -> None:
         pages = self.count_number_of_pages()
         for page in range(1, pages + 1):
             bs_category = self.parse_specific_category_page(page)
@@ -100,7 +100,7 @@ class DownloadData(PanoramaSiteData):
                 phone = None
             else:
                 phone = json_load['telephone']
-            json_ = {
+            data = {
                 "category_name": self.category[1],
                 "subcategory_name": self.category[2],
                 "company_name": company_name,
@@ -109,10 +109,10 @@ class DownloadData(PanoramaSiteData):
                 "phone_number": phone,
                 "info_of_send": 'to send'
             }
-            print(json_)
-            return json_
+            print(data)
+            return data
 
-    def save_data(self, bs_category: BeautifulSoup):
+    def save_data(self, bs_category: BeautifulSoup) -> None:
         insert_data: list
 
         for company in self.extract_correct_data(bs_category):
