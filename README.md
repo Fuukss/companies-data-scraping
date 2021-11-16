@@ -1,7 +1,6 @@
 # Companies data scraper 
-One application for scraping data and sending emails.\
-\
-Everything what new user has do it:
+One application for scraping data and sending emails.
+
 
 ## Create database 
 ```
