@@ -6,6 +6,7 @@ from category import CategoryScraper
 from db import get_count_of_random_companies_to_send, get_count_of_random_companies
 from scraping import DownloadData
 from email_sender import Email
+from create_db import create_database_with_table
 
 
 class MenuFunctionality(CategoryScraper):
@@ -77,6 +78,19 @@ class MenuFunctionality(CategoryScraper):
         except Exception as exception_name:
             print(exception_name)
 
+    @staticmethod
+    def check_if_database_exist() -> None:
+        """
+        Check if database exist when program starting.
+        If exist continue, else create database with base table.
+        """
+        try:
+            with open('application.db'):
+                return print("Database already exist")
+        except IOError:
+            create_database_with_table()
+            print("Database has been created.")
+
 
 def main():
     """
@@ -85,6 +99,7 @@ def main():
     """
     # Initial menu class
     menu = MenuFunctionality()
+    menu.check_if_database_exist()
     menu.get_list_of_categories()
     menu.get_list_of_subcategories()
     while True:
