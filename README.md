@@ -1,16 +1,32 @@
 # Companies data scraper 
+One application for scraping data and sending emails.\
+\
+Everything what new user has do it:
 
 ## Create database 
 ```
 $ python create_db.py
+```
+
+## Update smtp login and email params
+```
+# File email_sender.py
+smtp.login('<email_login>', '<password>')
+
+msg['Subject'] = '<Subject>'
+msg['From'] = '<email>'
+```
+
+## Update email template 
+```
+# template/html_template.py
 ```
 ## Run app 
 ```
 $ python main.py
 ```
 
-## Usage 
-#### At this moment program available:
+#### Menu options:
 1 - display categories\
 2 - display subcategories\
 3 - scrap random count categories\
