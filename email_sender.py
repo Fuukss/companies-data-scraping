@@ -6,6 +6,7 @@ Email sender module.
 import smtplib
 from email.message import EmailMessage
 from template.html_template import html_template
+from db import update_data_in_database
 
 
 def send_email(email):
@@ -23,5 +24,6 @@ def send_email(email):
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
         smtp.login('<email login>>', '<password>')
         smtp.send_message(msg)
-        print(f"Email to {email} has been sent")
+        update_data_in_database(email)
+        print(f"Email to {email} has been sent and to_send value changed")
 
