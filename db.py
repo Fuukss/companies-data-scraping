@@ -9,7 +9,21 @@ import sqlite3
 
 def company_to_json(item):
     """
-    Processing the result of sql query
+    Processing the result of sql query for display
+    """
+    return {
+        "category_name": item[0],
+        "subcategory_name": item[1],
+        "company_name": item[2],
+        "email_address": item[3],
+        "web_address": item[4],
+        "phone_number": item[5]
+    }
+
+
+def company_to_json_for_email_sender(item):
+    """
+    Processing the result of sql query for email sender
     """
     return {
         "category_name": item[1],
@@ -92,7 +106,7 @@ def get_count_of_random_companies(num: int):
             cur.execute('select * from companies order by RANDOM() LIMIT (?)', (num,))
 
             # Fetch the data and turn into a dict
-            result = list(map(company_to_json, cur.fetchall()))
+            result = list(map(company_to_json_for_email_sender, cur.fetchall()))
 
             return result
 
