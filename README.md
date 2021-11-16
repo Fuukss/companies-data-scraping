@@ -2,11 +2,6 @@
 One application for scraping data from <https://panoramafirm.pl/> and sending emails use defined email template.
 
 
-## Create database 
-```
-$ python create_db.py
-```
-
 ## Update smtp settings and email params
 Possible to send emails from GMail SMTP Server (Google) \
 Instruction for gmail config: \
