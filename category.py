@@ -26,10 +26,9 @@ class CategoryScraper:
         Return list of instance of an objects - categories
         :return: category_object_list: href(), __str__()
         """
-        class_ = 'card-header bg-transparent border-0 py-1 cursor-pointer'
-        for categories in self.bs_panorama_web_site.find_all('div', class_):
-            category = categories.find('a', href=True)
-            category = category['href']
+        _class = 'card-header bg-transparent border-0 py-1 cursor-pointer'
+        for categories in self.bs_panorama_web_site.find_all('div', _class):
+            category = (categories.find('a', href=True))['href']
             category_object = MainCategory(category)
             self.category_list_of_objects.append(category_object)
         return self.category_list_of_objects
@@ -46,8 +45,7 @@ class CategoryScraper:
         """
         for categories in self.category_list_of_objects:
             for subcategory in self.bs_subcategories_site_parse_html(categories)('li', class_='py-1'):
-                subcategory = subcategory.find('a', href=True)
-                subcategory = subcategory['href']
+                subcategory = (subcategory.find('a', href=True))['href']
                 subcategory_object = SubCategory(categories, subcategory)
                 self.subcategory_list_of_objects.append(subcategory_object)
         return self.subcategory_list_of_objects
