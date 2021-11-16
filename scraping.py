@@ -106,7 +106,8 @@ class DownloadData(PanoramaSiteData):
                 "company_name": company_name,
                 "email_address": email,
                 "web_address": web,
-                "phone_number": phone
+                "phone_number": phone,
+                "info_of_send": 'to send'
             }
             print(json_)
             return json_
