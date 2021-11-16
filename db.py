@@ -17,7 +17,8 @@ def company_to_json(item):
         "company_name": item[2],
         "email_address": item[3],
         "web_address": item[4],
-        "phone_number": item[5]
+        "phone_number": item[5],
+        "info_of_send": item[6]
     }
 
 
@@ -31,7 +32,8 @@ def company_to_json_for_email_sender(item):
         "company_name": item[3],
         "email_address": item[4],
         "web_address": item[5],
-        "phone_number": item[6]
+        "phone_number": item[6],
+        "info_of_send": item[7]
     }
 
 
@@ -88,8 +90,24 @@ def save_data_to_database(dict_: dict) -> None or str:
             # Execute the query
             cur.execute("INSERT INTO companies"
                         "(category_name, subcategory_name, company_name, "
-                        "email_address, web_address, phone_number) "
-                        "VALUES (?, ?, ?, ?, ?, ?)", dict_)
+                        "email_address, web_address, phone_number, info_of_send) "
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)", dict_)
+            return message_query_done()
+    except Exception as exception_name:
+        print(exception_name)
+        return []
+
+
+def update_data_in_database(email: str) -> None or str:
+    """
+    Query to update data in database after send email.
+    """
+    try:
+        with SQLite("application.db") as cur:
+            # Execute the query
+            sqlite_update_query = """Update companies set info_of_send = "sent" where email_address = ?"""
+            columnValues = email,
+            cur.execute(sqlite_update_query, columnValues)
             return message_query_done()
     except Exception as exception_name:
         print(exception_name)
@@ -98,7 +116,7 @@ def save_data_to_database(dict_: dict) -> None or str:
 
 def get_count_of_random_companies(num: int):
     """
-    Query to get random item from database.
+    Query to get random count item from database.
     """
     try:
         with SQLite("application.db") as cur:
@@ -112,4 +130,42 @@ def get_count_of_random_companies(num: int):
 
     except Exception as exception_name:
         print(f'Return count of random companies: {exception_name}')
+        return []
+
+
+def get_count_of_random_companies_to_send(num: int):
+    """
+    Query to get random count item from database.
+    """
+    try:
+        with SQLite("application.db") as cur:
+            # Execute the query
+            cur.execute('select * from companies where info_of_send like "to send" order by RANDOM() LIMIT (?)', (num,))
+
+            # Fetch the data and turn into a dict
+            result = list(map(company_to_json_for_email_sender, cur.fetchall()))
+
+            return result
+
+    except Exception as exception_name:
+        print(f'Return count of random companies with to send info: {exception_name}')
+        return []
+
+
+def get_count_of_random_companies_sent(num: int):
+    """
+    Query to get random count item from database.
+    """
+    try:
+        with SQLite("application.db") as cur:
+            # Execute the query
+            cur.execute('select * from companies where info_of_send like "sent" order by RANDOM() LIMIT (?)', (num,))
+
+            # Fetch the data and turn into a dict
+            result = list(map(company_to_json_for_email_sender, cur.fetchall()))
+
+            return result
+
+    except Exception as exception_name:
+        print(f'Return count of random companies with sent info: {exception_name}')
         return []
