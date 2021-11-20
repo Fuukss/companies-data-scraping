@@ -72,7 +72,6 @@ class MenuFunctionality(CategoryScraper):
                 print(f"Email: {index}/{len_}: {single_random_data}")
                 email.send_email(single_random_data['email_address'])
                 print(f"Emial number: {index} to {single_random_data['email_address']} has been sent.")
-                time.sleep(5)
         except IndexError:
             print('There are probably not that many records in the database.')
         except Exception as exception_name:
