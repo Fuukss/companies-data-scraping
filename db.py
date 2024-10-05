@@ -69,8 +69,8 @@ def take_one_company():
 
             return print(result[1])
 
-    except Exception as exception_name:
-        print(exception_name)
+1    except Exception:
+        pass
         return []
 
 
@@ -93,8 +93,8 @@ def save_data_to_database(dict_: dict) -> None or str:
                         "email_address, web_address, phone_number, info_of_send) "
                         "VALUES (?, ?, ?, ?, ?, ?, ?)", dict_)
             return message_query_done()
-    except Exception as exception_name:
-        print(exception_name)
+    except Exception:
+        pass
         return []
 
 
@@ -109,8 +109,8 @@ def update_data_in_database(email: str) -> None or str:
             columnValues = email,
             cur.execute(sqlite_update_query, columnValues)
             return message_query_done()
-    except Exception as exception_name:
-        print(exception_name)
+    except Exception:
+        pass
         return []
 
 
@@ -128,8 +128,8 @@ def get_count_of_random_companies(num: int):
 
             return result
 
-    except Exception as exception_name:
-        print(f'Return count of random companies: {exception_name}')
+    except Exception:
+        print(f'Return count of random companies')
         return []
 
 
@@ -147,8 +147,8 @@ def get_count_of_random_companies_to_send(num: int):
 
             return result
 
-    except Exception as exception_name:
-        print(f'Return count of random companies with to send info: {exception_name}')
+    except Exception:
+        print(f'Return count of random companies with to send info')
         return []
 
 
@@ -166,6 +166,6 @@ def get_count_of_random_companies_sent(num: int):
 
             return result
 
-    except Exception as exception_name:
-        print(f'Return count of random companies with sent info: {exception_name}')
+    except Exception:
+        print(f'Return count of random companies with sent info')
         return []

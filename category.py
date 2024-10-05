@@ -1,11 +1,6 @@
-"""
-
-Functionality for get the category from panorama web site and then scrap subcategories data.
-
-"""
 import random
 from bs4 import BeautifulSoup
-from requests import get
+import requests
 from objects import MainCategory, SubCategory
 from dataclasses import dataclass
 
@@ -18,7 +13,7 @@ class CategoryScraper:
     category_list_of_objects = []
 
     def __init__(self):
-        self.industry_page = get(f'{self.URL_PANORAMA}')
+        self.industry_page = requests.get(f'{self.URL_PANORAMA}')
         self.bs_panorama_web_site = BeautifulSoup(self.industry_page.content, 'html.parser')
 
     def get_list_of_categories(self) -> list:
@@ -34,7 +29,7 @@ class CategoryScraper:
         return self.category_list_of_objects
 
     def bs_subcategories_site_parse_html(self, categories: list) -> BeautifulSoup:
-        page_subcategory = get(f'{self.URL_PANORAMA_MAIN}{categories.href()}')
+        page_subcategory = requests.get(f'{self.URL_PANORAMA_MAIN}{categories.href()}')
         bs_panorama_sub = BeautifulSoup(page_subcategory.content, 'html.parser')
         return bs_panorama_sub
 

@@ -1,14 +1,7 @@
-"""
-
-Process scraping data by class: DownloadData.
-Main functionality: scrap_company_data()
-
-"""
-
 import math
 import json
 from bs4 import BeautifulSoup
-from requests import get
+import requests
 from db import save_data_to_database
 from dataclasses import dataclass
 
@@ -16,7 +9,7 @@ from dataclasses import dataclass
 @dataclass
 class PanoramaSiteData:
     """
-    Data needed to future URL's creation.
+    Data needed for future URL's creation.
     """
     PANORAMA_MAIN: str = 'https://panoramafirm.pl'
     TEST_LIST: str = '/amortyzatory_samochodowe'
@@ -38,8 +31,8 @@ class DownloadData(PanoramaSiteData):
         return 'Process has been finished with success!'
 
     def parse_top_lv_category_site(self) -> BeautifulSoup:
-        page_main = get(f'{self.PANORAMA_MAIN}{self.category[0]}{self.END_PANORAMA_MAIN}')
-        bs_panorama = BeautifulSoup(page_main.content, 'html.parser')
+        response = requests.get(f'{self.PANORAMA_MAIN}{self.category[0]}{self.END_PANORAMA_MAIN}', verify=False)
+        bs_panorama = BeautifulSoup(response.content, 'html.parser')
         return bs_panorama
 
     def count_number_of_pages(self) -> int:
@@ -58,13 +51,15 @@ class DownloadData(PanoramaSiteData):
             f'Category: {self.category[1]}. Subcategory: {self.category[2]}')
 
     def parse_specific_category_page(self, page: int) -> BeautifulSoup:
-        page_category = get(
+        url = (
             f'{self.PANORAMA_MAIN}'
             f'{self.category[0]}'
             f'{self.END_PANORAMA_MAIN_ST}'
             f'{page}'
-            f'{self.END_PANORAMA_MAIN_SEC}')
-        bs_category = BeautifulSoup(page_category.content, 'html.parser')
+            f'{self.END_PANORAMA_MAIN_SEC}'
+        )
+        response = requests.get(url, verify=False)
+        bs_category = BeautifulSoup(response.content, 'html.parser')
         return bs_category
 
     def scrap_company_data(self) -> None:
@@ -120,10 +115,8 @@ class DownloadData(PanoramaSiteData):
             data_dict = self.json_company_data_into_dict(json_load)
             try:
                 insert_data = [x for x in data_dict.values() if data_dict is not None]
-            except AttributeError as exception_name:
-                print(exception_name)
-            except UnboundLocalError as exception_name:
-                print(exception_name)
+            except Exception:
+                pass
             else:
                 save_data_to_database(insert_data)
             finally:

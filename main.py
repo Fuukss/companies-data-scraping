@@ -38,8 +38,8 @@ class MenuFunctionality(CategoryScraper):
                 companies.scrap_company_data()
         except IndexError:
             print("Probably categories or subcategories doesn't exist.")
-        except Exception as exception_name:
-            print(exception_name)
+        except Exception:
+            pass
 
     @staticmethod
     def get_random_records() -> None:
@@ -53,8 +53,8 @@ class MenuFunctionality(CategoryScraper):
                 print(f"{index}: {single_random_data}")
         except IndexError:
             print('There are probably not that many records in the database.')
-        except Exception as exception_name:
-            print(exception_name)
+        except Exception:
+            pass
 
     @staticmethod
     def send_random_count_of_emails() -> None:
@@ -74,8 +74,8 @@ class MenuFunctionality(CategoryScraper):
                 print(f"Emial number: {index} to {single_random_data['email_address']} has been sent.")
         except IndexError:
             print('There are probably not that many records in the database.')
-        except Exception as exception_name:
-            print(exception_name)
+        except Exception:
+            pass
 
     @staticmethod
     def check_if_database_exist() -> None:
